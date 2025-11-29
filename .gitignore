@@ -1,0 +1,22 @@
+# Build artifacts
+*.o
+*.obj
+*.exe
+*.dll
+*.class
+
+# Build directories
+build/
+bin/
+obj/
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.log
+coverage/
