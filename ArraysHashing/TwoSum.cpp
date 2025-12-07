@@ -1,6 +1,9 @@
 #include <vector>
+#include <unordered_map>
+#include <algorithm>
+#include <utility>
 
- //Brute Force Approach
+//Brute Force Approach
 class Solution1{
     public:
     std::vector<int> twosum(std::vector<int>& nums, int target){
@@ -15,24 +18,23 @@ class Solution1{
     }
 };
 
-
 //Sorting
 class Solution2{
     public:
     std::vector<int> twosum(std::vector<int>& nums, int target){
-        vector<pair<int, int>> A;
+        std::vector<std::pair<int, int>> A;
         for(int i=0;i<nums.size();i++){
             A.push_back({nums[i], i});
         }
-        sort(A.begin(), A.end());
+        std::sort(A.begin(), A.end());
         int i=0;
         int j=nums.size()-1;
         while(i<j){
             int cur = A[i].first + A[j].first;
             if(cur==target){
                 return{
-                    min(A[i].second, A[j].second),
-                    max(A[i].second, A[j].second)
+                    std::min(A[i].second, A[j].second),
+                    std::max(A[i].second, A[j].second)
                 };
             }
             else if(cur < target){
@@ -43,7 +45,8 @@ class Solution2{
         }
         return{};
     }
-}
+};
+
 
 
 //HashMap(two pass)
