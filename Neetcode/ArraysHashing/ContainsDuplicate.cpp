@@ -1,4 +1,9 @@
-# include <iostream>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <unordered_set>
+
+using namespace std;
 
 //Solution Brute Force
 class Solution1{
@@ -14,7 +19,7 @@ class Solution1{
             
         return false;
     }
-}
+};
 
 //Solution Sorting
 class Solution2{
@@ -28,7 +33,7 @@ class Solution2{
         }
         return false;
     }
-}
+};
 
 
 //Solution3 HashSet
@@ -44,4 +49,4 @@ class Solution3{
         }
         return false;
     }
-}
+};
