@@ -1,0 +1,103 @@
+#include <string>
+#include <algorithm>
+#include <unordered_map>
+
+using namespace std;
+// Brute Force 
+class Solution{
+    public:
+    bool checkInclusion(const std::string& s1, const std::string& s2){
+        if (s1.size() > s2.size()) return false;
+        string sortedS1 = s1;
+        sort(sortedS1.begin(), sortedS1.end());
+
+        for (size_t i = 0; i <= s2.size() - s1.size(); ++i){
+            string subStr = s2.substr(i, s1.size());
+            sort(subStr.begin(), subStr.end());
+
+            if (subStr == sortedS1) return true;
+        }
+        return false;
+    }
+};
+
+
+// HashTable
+class SolutionHash{
+    public:
+    bool checkInclusion(string s1, string s2){
+        unordered_map<char, int> count1;
+        for(char c : s1){
+            count1[c]++;
+        }
+        int need = count1.size();
+        for(int i = 0; i < s2.size(); i++){
+            unordered_map<char, int> count2;
+            int cur = 0;
+            for(int j = i;j < s2.size(); j++){
+                char c = s2[j];
+                count2[c]++;
+                if(count1[c] < count2[c]){
+                    break;
+                }
+                if(count1[c] == count2[c]){
+                    cur++;
+                }
+                if(cur == need){
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+};
+
+
+
+// Sliding Window
+class Solution{
+    public:
+    bool checkInclusion(string s1, string s2){
+        if(s1.length() > s2.length()){
+            return false;
+        }
+        vector<int> s1Count(26.0);
+        vector<int> s2Count(26.0);
+        for(int i = 0; i < s1.length(); i++){
+            s1Count[s1[i] - 'a']++;
+            s2Count[s2[i] - 'a']++;
+        }
+        int matches = 0;
+        for(int i = 0; i < 26; i++){
+            if(s1Count[i] == s2Count[i]){
+                matches++;
+            }
+        }
+
+       int l = 0;
+        for (int r = s1.length(); r < s2.length(); r++) {
+            if (matches == 26) {
+                return true;
+            }
+
+            int index = s2[r] - 'a';
+            s2Count[index]++;
+            if (s1Count[index] == s2Count[index]) {
+                matches++;
+            } else if (s1Count[index] + 1 == s2Count[index]) {
+                matches--;
+            }
+
+            index = s2[l] - 'a';
+            s2Count[index]--;
+            if (s1Count[index] == s2Count[index]) {
+                matches++;
+            } else if (s1Count[index] - 1 == s2Count[index]) {
+                matches--;
+            }
+            l++;
+        }
+        return matches == 26;
+    }
+};
